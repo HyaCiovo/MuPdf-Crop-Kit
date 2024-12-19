@@ -1,8 +1,8 @@
 README.md
 docs/*
 .vscode/*
-.npmrc
 .gitignore
+pnpm-lock.yaml
 LICENSE
 tsconfig.json
 tsconfig.node.json
