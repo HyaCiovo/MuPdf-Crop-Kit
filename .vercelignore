@@ -3,6 +3,7 @@ docs/*
 .vscode/*
 .gitignore
 pnpm-lock.yaml
+.npmrc
 LICENSE
 tsconfig.json
 tsconfig.node.json
