@@ -9,17 +9,6 @@ export function renderPage(index: number, doc: mupdfjs.PDFDocument) {
   return URL.createObjectURL(new Blob([png]));
 }
 
-type Rect = [number, number, number, number];
-export function getBounds(
-  page: number,
-  doc: mupdfjs.PDFDocument
-): Promise<Rect> {
-  return new Promise((res) => {
-    const pageContent = doc.loadPage(page);
-    const bounds = pageContent.getBounds();
-    res(bounds);
-  });
-}
 
 /* 使用内存占用过大，无法使用，待优化 */
 export function merge(

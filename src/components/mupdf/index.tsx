@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import * as mupdfjs from "./dist/mupdf"
-import { renderPage, getBounds, merge } from "./pdf";
+import { renderPage } from "./pdf";
 import { App } from "antd";
+import jsPDF from "jspdf";
 
 const MuPdf = () => {
   const { message } = App.useApp();
@@ -12,6 +13,7 @@ const MuPdf = () => {
 
   const handleFileChange = (info: any) => {
     const files = info.target.files;
+    setCropPage([]);
     if (files && files.length > 0) {
       const file = files[0];
       const reader = new FileReader();
@@ -21,7 +23,6 @@ const MuPdf = () => {
         docRef.current = new mupdfjs.PDFDocument(arrayBuffer);
         docCopyRef.current = new mupdfjs.PDFDocument(arrayBuffer);
         const count = docRef.current.countPages();
-        console.log(docRef.current, count)
         const pageList = [];
         for (let i = 0; i < count; i++) {
           pageList.push(renderPage(i, docRef.current))
@@ -36,9 +37,8 @@ const MuPdf = () => {
   const crop = async (pageNumber: number) => {
     if (!docRef.current || !docCopyRef.current)
       return message.error('Please upload a PDF file first!');
-    const bounds = await getBounds(pageNumber, docRef.current);
-    const [x, y, width, height] = bounds;
     const page = docRef.current.loadPage(pageNumber) as mupdfjs.PDFPage;
+    const [x, y, width, height] = page.getBounds()
     const pageCopy = docCopyRef.current.loadPage(pageNumber) as mupdfjs.PDFPage;
 
     page.setPageBox("CropBox", [x, y, x + width / 2, y + height]);
@@ -48,12 +48,9 @@ const MuPdf = () => {
   const convert = async () => {
     if (!docRef.current || !docCopyRef.current)
       return message.error('Please upload a PDF file first!');
-    console.log(docRef.current.countPages())
-    for (let i = 0; i < pages.length; i++) {
-      await crop(i)
-    }
     const pageList = [];
     for (let i = 0; i < pages.length; i++) {
+      await crop(i)
       pageList.push(renderPage(i, docRef.current), renderPage(i, docCopyRef.current))
     }
     setCropPage(pageList);
@@ -73,8 +70,17 @@ const MuPdf = () => {
   // }
 
   const download = () => {
+    if (!docRef.current || !docCopyRef.current)
+      return message.error('Please upload a PDF file first!');
     // mergePdf()
-    message.warning('This feature is not available yet.')
+    // message.warning('This feature is not available yet.')
+    const pdf = new jsPDF();
+    pdf.addImage(cropPages[0], 'JPEG', 0, 0, 210, 297);
+    for (let i = 1; i < cropPages.length; i++) {
+      pdf.addPage();
+      pdf.addImage(cropPages[i], 'JPEG', 0, 0, 210, 297);
+    }
+    pdf.save("merged.pdf");
   }
 
   return <>
