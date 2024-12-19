@@ -1,0 +1,9 @@
+README.md
+docs/*
+.vscode/*
+.npmrc
+.gitignore
+LICENSE
+tsconfig.json
+tsconfig.node.json
+tsconfig.app.json
