@@ -4,6 +4,3 @@ docs/*
 .gitignore
 pnpm-lock.yaml
 LICENSE
-tsconfig.json
-tsconfig.node.json
-tsconfig.app.json
