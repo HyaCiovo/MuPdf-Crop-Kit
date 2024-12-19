@@ -9,14 +9,13 @@ export function renderPage(index: number, doc: mupdfjs.PDFDocument) {
   return URL.createObjectURL(new Blob([png]));
 }
 
-
 /* 使用内存占用过大，无法使用，待优化 */
 export function merge(
   thisPDF: mupdfjs.PDFDocument,
   sourcePDF: mupdfjs.PDFDocument,
   fromPage = 0,
   toPage = -1,
-  startAt = -1,
+  startAt = -1
 ) {
   if (thisPDF.pointer === 0) {
     throw new Error("document closed");

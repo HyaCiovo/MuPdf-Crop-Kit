@@ -6,6 +6,7 @@ import jsPDF from "jspdf";
 
 const MuPdf = () => {
   const { message } = App.useApp();
+  const fileRef = useRef<File>();
   const docRef = useRef<mupdfjs.PDFDocument>();
   const docCopyRef = useRef<mupdfjs.PDFDocument>();
   const [pages, setPages] = useState<string[]>([]);
@@ -15,7 +16,7 @@ const MuPdf = () => {
     const files = info.target.files;
     setCropPage([]);
     if (files && files.length > 0) {
-      const file = files[0];
+      fileRef.current = files[0]
       const reader = new FileReader();
 
       reader.onload = (event) => {
@@ -30,7 +31,7 @@ const MuPdf = () => {
         setPages(pageList);
       };
 
-      reader.readAsArrayBuffer(file);
+      reader.readAsArrayBuffer(fileRef.current as Blob);
     }
   }
 
@@ -75,12 +76,12 @@ const MuPdf = () => {
     // mergePdf()
     // message.warning('This feature is not available yet.')
     const pdf = new jsPDF();
-    pdf.addImage(cropPages[0], 'JPEG', 0, 0, 210, 297);
+    pdf.addImage(cropPages[0], 'PNG', 0, 0, 210, 297);
     for (let i = 1; i < cropPages.length; i++) {
       pdf.addPage();
-      pdf.addImage(cropPages[i], 'JPEG', 0, 0, 210, 297);
+      pdf.addImage(cropPages[i], 'PNG', 0, 0, 210, 297);
     }
-    pdf.save("merged.pdf");
+    pdf.save(`${fileRef.current?.name.replace('.pdf', '')}_A4.pdf`);
   }
 
   return <>
