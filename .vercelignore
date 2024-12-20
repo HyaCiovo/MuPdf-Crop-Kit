@@ -3,4 +3,5 @@ docs/*
 .vscode/*
 .gitignore
 pnpm-lock.yaml
+src-tauri
 LICENSE

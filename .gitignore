@@ -3,3 +3,4 @@ pnpm-lock.yaml
 build
 .vscode/*
 .npmrc
+src-tauri/target/*
