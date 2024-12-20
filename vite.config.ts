@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   build: {
-    target: "modules",
+    target: "esnext",
     outDir: "build",
     assetsDir: "assets",
     assetsInlineLimit: 4096,
