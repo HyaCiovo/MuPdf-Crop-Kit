@@ -9,13 +9,6 @@ export default defineConfig({
     open: true,
     port: 4000,
   },
-  css: {
-    preprocessorOptions: {
-      less: {
-        javascriptEnabled: true,
-      },
-    },
-  },
   build: {
     target: "esnext",
     outDir: "build",

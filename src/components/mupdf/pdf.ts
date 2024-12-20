@@ -14,9 +14,10 @@ export function merge(
   sourcePage: mupdfjs.PDFPage
 ) {
   const pageObj = sourcePage.getObject();
+  const [x, y, width, height] = sourcePage.getBounds();
   // Create a new page in the target document
   const newPageObj = targetPDF.addPage(
-    sourcePage.getBounds(),
+    [x, y, width, height],
     0,
     targetPDF.newDictionary(),
     ""
@@ -46,6 +47,8 @@ export function generateNewDoc(PDF: mupdfjs.PDFDocument) {
     if (i % 2 === 0)
       page.setPageBox("CropBox", [x, y, x + width / 2, y + height]);
     else page.setPageBox("CropBox", [x + width / 2, y, x + width, y + height]);
+
+    page.setPageBox("TrimBox", [0, 0, 595.28, 841.89]);
   }
   return mergedPDF;
 }

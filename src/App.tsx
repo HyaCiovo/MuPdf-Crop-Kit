@@ -1,4 +1,4 @@
-import './App.less'
+import './App.css'
 import MuPdf from './components/mupdf';
 import Logo from './assets/sidebar-logo-dark.svg'
 
