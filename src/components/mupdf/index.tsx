@@ -1,14 +1,10 @@
 import { useRef, useState } from "react";
 import * as mupdfjs from "./dist/mupdf"
-import { renderPage } from "./pdf";
-import { App } from "antd";
-import jsPDF from "jspdf";
-
+import toast, { Toaster } from 'react-hot-toast';
+import { generateNewDoc, renderPage } from "./pdf";
 const MuPdf = () => {
-  const { message } = App.useApp();
   const fileRef = useRef<File>();
   const docRef = useRef<mupdfjs.PDFDocument>();
-  const docCopyRef = useRef<mupdfjs.PDFDocument>();
   const [pages, setPages] = useState<string[]>([]);
   const [cropPages, setCropPage] = useState<string[]>([]);
 
@@ -22,7 +18,6 @@ const MuPdf = () => {
       reader.onload = (event) => {
         const arrayBuffer = event.target?.result as ArrayBuffer;
         docRef.current = new mupdfjs.PDFDocument(arrayBuffer);
-        docCopyRef.current = new mupdfjs.PDFDocument(arrayBuffer);
         const count = docRef.current.countPages();
         const pageList = [];
         for (let i = 0; i < count; i++) {
@@ -35,56 +30,24 @@ const MuPdf = () => {
     }
   }
 
-  const crop = async (pageNumber: number) => {
-    if (!docRef.current || !docCopyRef.current)
-      return message.error('Please upload a PDF file first!');
-    const page = docRef.current.loadPage(pageNumber) as mupdfjs.PDFPage;
-    const [x, y, width, height] = page.getBounds()
-    const pageCopy = docCopyRef.current.loadPage(pageNumber) as mupdfjs.PDFPage;
+  const convert = () => {
+    if (!docRef.current)
+      return toast.error('Please upload a PDF file first!');
+    const mergedDoc = generateNewDoc(docRef.current)
 
-    page.setPageBox("CropBox", [x, y, x + width / 2, y + height]);
-    pageCopy.setPageBox("CropBox", [x + width / 2, y, x + width, y + height]);
-  }
-
-  const convert = async () => {
-    if (!docRef.current || !docCopyRef.current)
-      return message.error('Please upload a PDF file first!');
     const pageList = [];
-    for (let i = 0; i < pages.length; i++) {
-      await crop(i)
-      pageList.push(renderPage(i, docRef.current), renderPage(i, docCopyRef.current))
+    for (let i = 0; i < mergedDoc.countPages(); i++) {
+      pageList.push(renderPage(i, mergedDoc))
     }
     setCropPage(pageList);
   }
 
-  // const mergePdf = () => {
-  //   if (!docRef.current || !docCopyRef.current)
-  //     return message.error('Please upload a PDF file first!');
-  //   for (let i = 0; i < docRef.current.countPages(); i++) {
-  //     merge(docRef.current, docCopyRef.current, i, i + 1, i + 1)
-  //   }
-  //   const pageList = [];
-  //   for (let i = 0; i < pages.length; i++) {
-  //     pageList.push(renderPage(i, docRef.current))
-  //   }
-  //   setCropPage(pageList);
-  // }
-
   const download = () => {
-    if (!docRef.current || !docCopyRef.current)
-      return message.error('Please upload a PDF file first!');
-    // mergePdf()
-    // message.warning('This feature is not available yet.')
-    const pdf = new jsPDF();
-    pdf.addImage(cropPages[0], 'PNG', 0, 0, 210, 297);
-    for (let i = 1; i < cropPages.length; i++) {
-      pdf.addPage();
-      pdf.addImage(cropPages[i], 'PNG', 0, 0, 210, 297);
-    }
-    pdf.save(`${fileRef.current?.name.replace('.pdf', '')}_A4.pdf`);
+
   }
 
   return <>
+    <Toaster containerClassName='scale-[1.3] text-xl min-w-[250px]' />
     <div className="mb-8 hover:scale-105 hover:rotate-3 transition-all duration-300 ease-in-out">
       <label className="cursor-pointer font-semibold bg-gradient-to-r from-[#FD8F2F] to-[#FD4D07] text-white py-3 px-6 my-10 rounded-xl 
             shadow-lg" htmlFor="upload">Upload PDF File</label>

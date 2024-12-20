@@ -9,55 +9,43 @@ export function renderPage(index: number, doc: mupdfjs.PDFDocument) {
   return URL.createObjectURL(new Blob([png]));
 }
 
-/* 使用内存占用过大，无法使用，待优化 */
 export function merge(
-  thisPDF: mupdfjs.PDFDocument,
-  sourcePDF: mupdfjs.PDFDocument,
-  fromPage = 0,
-  toPage = -1,
-  startAt = -1
+  targetPDF: mupdfjs.PDFDocument,
+  sourcePage: mupdfjs.PDFPage
 ) {
-  if (thisPDF.pointer === 0) {
-    throw new Error("document closed");
+  const pageObj = sourcePage.getObject();
+  // Create a new page in the target document
+  const newPageObj = targetPDF.addPage(
+    sourcePage.getBounds(),
+    0,
+    targetPDF.newDictionary(),
+    ""
+  );
+  // Copy page contents
+  const contents = pageObj.get("Contents");
+  if (contents) newPageObj.put("Contents", targetPDF.graftObject(contents));
+  // Copy page resources
+  const resources = pageObj.get("Resources");
+  if (resources) newPageObj.put("Resources", targetPDF.graftObject(resources));
+  // Insert the new page at the specified position
+  targetPDF.insertPage(-1, newPageObj);
+}
+
+export function generateNewDoc(PDF: mupdfjs.PDFDocument) {
+  const count = PDF.countPages();
+  const mergedPDF = new mupdfjs.PDFDocument();
+  for (let i = 0; i < count; i++) {
+    const page = PDF.loadPage(i);
+    merge(mergedPDF, page);
+    merge(mergedPDF, page);
   }
-  if (sourcePDF.pointer === 0) {
-    throw new Error("source document closed");
+
+  for (let i = 0; i < count * 2; i++) {
+    const page = mergedPDF.loadPage(i); // 使用 mergedPDF 的页码
+    const [x, y, width, height] = page.getBounds();
+    if (i % 2 === 0)
+      page.setPageBox("CropBox", [x, y, x + width / 2, y + height]);
+    else page.setPageBox("CropBox", [x + width / 2, y, x + width, y + height]);
   }
-  if (thisPDF === sourcePDF) {
-    throw new Error("Cannot merge a document with itself");
-  }
-  const sourcePageCount = sourcePDF.countPages();
-  const targetPageCount = thisPDF.countPages();
-  // Normalize page numbers
-  fromPage = Math.max(0, Math.min(fromPage, sourcePageCount - 1));
-  toPage =
-    toPage < 0 ? sourcePageCount - 1 : Math.min(toPage, sourcePageCount - 1);
-  startAt = startAt < 0 ? targetPageCount : Math.min(startAt, targetPageCount);
-  // Ensure fromPage <= toPage
-  if (fromPage > toPage) {
-    [fromPage, toPage] = [toPage, fromPage];
-  }
-  for (let i = fromPage; i <= toPage; i++) {
-    const sourcePage = sourcePDF.loadPage(i);
-    const pageObj = sourcePage.getObject();
-    // Create a new page in the target document
-    const newPageObj = thisPDF.addPage(
-      sourcePage.getBounds(),
-      0,
-      thisPDF.newDictionary(),
-      ""
-    );
-    // Copy page contents
-    const contents = pageObj.get("Contents");
-    if (contents) {
-      newPageObj.put("Contents", thisPDF.graftObject(contents));
-    }
-    // Copy page resources
-    const resources = pageObj.get("Resources");
-    if (resources) {
-      newPageObj.put("Resources", thisPDF.graftObject(resources));
-    }
-    // Insert the new page at the specified position
-    thisPDF.insertPage(startAt + (i - fromPage), newPageObj);
-  }
+  return mergedPDF;
 }
