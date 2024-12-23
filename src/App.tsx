@@ -40,10 +40,10 @@ const App = () => {
         <h1 className="title flex flex-col justify-center text-2xl sm:text-3xl md:text-4xl lg:text-6xl select-none hover:scale-105 transform duration-300
             font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#FD8F2F] to-[#FD4D07] mb-6">
           <img alt="logosidebar-logo-light.svg" src={Logo} className="h-12 md:h-20" />
-          MuPdf-Convert-Kit
+          MuPdf-Crop-Kit
         </h1>
         <div className="select-none text-sm sm:text-lg md:text-xl pb-10 max-w-[70vw] hover:scale-105 transform duration-300">
-          Convert PDF files from A3 to A4 size.
+          Crop PDF files from A3 to A4 size.
         </div>
         <MuPdf />
         <div className="text-sm text-gray-500 text-center mt-16 select-none hover:scale-105 transform duration-300">

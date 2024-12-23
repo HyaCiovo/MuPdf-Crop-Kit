@@ -1,4 +1,4 @@
-# MuPDF-Convert-Kit
+# MuPDF-Crop-Kit
 
 > 基于 `MuPDF.js` 实现的 PDF 文件 A3 转 A4 小工具。
 
@@ -7,7 +7,7 @@
 
 ## 项目简介
 
-`MuPDF-Convert-Kit` 是一个基于 `MuPDF.js`、`React`、`Vite` 和 `Tauri` 开发的小工具，用于将 PDF 文件从 A3 纸张大小转换为 A4 纸张大小。它具有以下特点：
+`MuPDF-Crop-Kit` 是一个基于 `MuPDF.js`、`React`、`Vite` 和 `Tauri` 开发的小工具，用于将 PDF 文件从 A3 纸张大小转换为 A4 纸张大小。它具有以下特点：
 
 - **免费使用**：无需任何费用。
 - **无需后台服务**：可以直接在浏览器中运行，无需依赖服务器。
@@ -28,11 +28,11 @@
 
 ### 浏览器版
 
-- 直接访问网页链接（[MuPdf-Convert-Kit](https://mupdf-convert-kit.vercel.app/)）。
+- 直接访问网页链接（[MuPdf-Crop-Kit](https://mupdf-convert-kit.vercel.app/)）。
 
 ### 桌面版
 
-- 下载并安装 Tauri 打包的桌面应用（[Release tauri-x64-exe-0.1.0 · HyaCiovo/MuPdf-Convert-Kit](https://github.com/HyaCiovo/MuPdf-Convert-Kit/releases/tag/tauri-x64-exe-0.1.0)）；
+- 下载并安装 Tauri 打包的桌面应用（[Release tauri-x64-exe-0.1.0 · HyaCiovo/MuPdf-Crop-Kit](https://github.com/HyaCiovo/MuPdf-Crop-Kit/releases/tag/tauri-x64-exe-0.1.0)）；
 - 使用源码自行打包需要的安装包。
 
 ## 替代方案
