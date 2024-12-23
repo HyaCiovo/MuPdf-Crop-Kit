@@ -1,6 +1,6 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "mupdf-convert-kit",
+  "productName": "mupdf-crop-kit",
   "version": "0.1.0",
   "identifier": "com.mupdf.dev",
   "build": {

@@ -52,3 +52,4 @@ export function generateNewDoc(PDF: mupdfjs.PDFDocument) {
   }
   return mergedPDF;
 }
+

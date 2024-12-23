@@ -1,8 +1,8 @@
 {
-  "name": "mupdf-convert-kit",
+  "name": "mupdf-crop-kit",
   "private": true,
   "author": "HyaCinth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "vite",

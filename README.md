@@ -3,7 +3,7 @@
 > 基于 `MuPDF.js` 实现的 PDF 文件 A3 转 A4 小工具。
 
 
-<img src="./src/assets/sidebar-logo-dark.svg" alt="Sidebar Logo" style="height:180px;" />
+<img src="./src/assets/logo.png" alt="Sidebar Logo" style="height:200px;" />
 
 ## 项目简介
 

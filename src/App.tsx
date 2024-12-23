@@ -1,6 +1,6 @@
 import './App.css'
 import MuPdf from './components/mupdf';
-import Logo from './assets/sidebar-logo-dark.svg'
+import Logo from './assets/logo.png'
 
 const App = () => {
 
@@ -37,9 +37,9 @@ const App = () => {
       </div>
 
       <div className="z-10 text-center flex flex-col items-center w-full">
-        <h1 className="title flex flex-col justify-center text-2xl sm:text-3xl md:text-4xl lg:text-6xl select-none hover:scale-105 transform duration-300
+        <h1 className="title flex flex-col justify-center items-center text-2xl sm:text-3xl md:text-4xl lg:text-6xl select-none hover:scale-105 transform duration-300
             font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#FD8F2F] to-[#FD4D07] mb-6">
-          <img alt="logosidebar-logo-light.svg" src={Logo} className="h-12 md:h-20" />
+          <img alt="logo" src={Logo} className="size-32 md:size-40"  />
           MuPdf-Crop-Kit
         </h1>
         <div className="select-none text-sm sm:text-lg md:text-xl pb-10 max-w-[70vw] hover:scale-105 transform duration-300">
