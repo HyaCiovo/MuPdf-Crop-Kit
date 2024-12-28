@@ -1,6 +1,7 @@
 # MuPDF-Crop-Kit
 
 > 基于 `MuPDF.js` 实现的 PDF 文件 A3 转 A4 小工具。
+>
 > 博客：[MuPDF＋Tauri的PDF切割小工具](https://juejin.cn/post/7451252126255382543?share_token=2e9ce7a2-f354-495a-bdf6-017beef9d98f)
 
 
