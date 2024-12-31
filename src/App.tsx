@@ -1,10 +1,11 @@
 import './App.css'
 import MuPdf from './components/mupdf'
 import Logo from './assets/logo.png'
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
 
 const App = () => {
+  const VERCEL = location.hostname.includes('vercel.app')
 
   return (
     <div className="relative min-h-screen w-full bg-gradient-to-b from-blue-100 to-white flex flex-col items-center justify-center p-4">
@@ -41,7 +42,7 @@ const App = () => {
       <div className="z-10 text-center flex flex-col items-center w-full">
         <h1 className="title flex flex-col justify-center items-center text-2xl sm:text-3xl md:text-4xl lg:text-6xl select-none hover:scale-105 transform duration-300
             font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#FD8F2F] to-[#FD4D07] mb-6">
-          <img alt="logo" src={Logo} className="size-32 md:size-40"  />
+          <img alt="logo" src={Logo} className="size-32 md:size-40" />
           MuPdf-Crop-Kit
         </h1>
         <div className="select-none text-sm sm:text-lg md:text-xl pb-10 max-w-[70vw] hover:scale-105 transform duration-300">
@@ -61,8 +62,10 @@ const App = () => {
       <div className="absolute top-10 left-10 w-20 h-20 border-4 border-blue-300 rounded-full opacity-50" />
       <div className="absolute bottom-10 right-10 w-16 h-16 bg-[#fd4d0772] rounded-lg animate-bounce opacity-50" />
       <div className="absolute top-1/4 right-1/4 w-12 h-12 bg-yellow-300 rounded-full opacity-50" />
-      <SpeedInsights />
-      <Analytics />
+      {VERCEL && <>
+        <SpeedInsights />
+        <Analytics />
+      </>}
     </div>
   )
 }
