@@ -1,6 +1,8 @@
 import './App.css'
-import MuPdf from './components/mupdf';
+import MuPdf from './components/mupdf'
 import Logo from './assets/logo.png'
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
 
 const App = () => {
 
@@ -59,6 +61,8 @@ const App = () => {
       <div className="absolute top-10 left-10 w-20 h-20 border-4 border-blue-300 rounded-full opacity-50" />
       <div className="absolute bottom-10 right-10 w-16 h-16 bg-[#fd4d0772] rounded-lg animate-bounce opacity-50" />
       <div className="absolute top-1/4 right-1/4 w-12 h-12 bg-yellow-300 rounded-full opacity-50" />
+      <SpeedInsights />
+      <Analytics />
     </div>
   )
 }
