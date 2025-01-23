@@ -8,7 +8,7 @@ const App = () => {
   const VERCEL = location.hostname.includes('vercel.app')
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-b from-blue-100 to-white flex flex-col items-center justify-center p-4">
+    <div className="relative min-h-screen w-full bg-linear-to-b from-blue-100 to-white flex flex-col items-center justify-center p-4">
       {/* Background pattern */}
       <div className="absolute inset-0 z-0 opacity-50">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -41,7 +41,7 @@ const App = () => {
 
       <div className="z-10 text-center flex flex-col items-center w-full">
         <h1 className="title flex flex-col justify-center items-center text-2xl sm:text-3xl md:text-4xl lg:text-6xl select-none hover:scale-105 transform duration-300
-            font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#FD8F2F] to-[#FD4D07] mb-6">
+            font-extrabold text-transparent bg-clip-text bg-linear-to-r from-[#FD8F2F] to-[#FD4D07] mb-6">
           <img alt="logo" src={Logo} className="size-32 md:size-40" />
           MuPdf-Crop-Kit
         </h1>

@@ -127,19 +127,19 @@ const MuPdf = () => {
   return <>
     <Toaster containerClassName='min-w-[250px]' />
     <div className="mb-8 hover:scale-105 hover:rotate-3 transition-all duration-300 ease-in-out">
-      <label className="cursor-pointer font-semibold bg-gradient-to-r from-[#FD8F2F] to-[#FD4D07] text-white py-3 px-6 my-10 rounded-xl 
+      <label className="cursor-pointer font-semibold bg-linear-to-r from-[#FD8F2F] to-[#FD4D07] text-white py-3 px-6 my-10 rounded-xl 
             shadow-lg" htmlFor="upload" >Upload PDF File</label>
       <input className="hidden" id="upload" type="file" onChange={handleFileChange} accept=".pdf" />
     </div>
     <div className="grid mx-4 md:grid-cols-2 gap-x-2 md:gap-x-4 gap-y-4 w-full md:mx-8">
       {pages.map((page, index) => <img key={index} src={page} className="w-" alt={`Page ${index + 1}`} />)}
     </div>
-    {pages.length > 0 && <button className="font-semibold bg-gradient-to-r from-[#FD8F2F] to-[#FD4D07] text-white py-3 px-6 my-10 rounded-xl 
+    {pages.length > 0 && <button className="font-semibold bg-linear-to-r from-[#FD8F2F] to-[#FD4D07] text-white py-3 px-6 my-10 rounded-xl 
             shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:rotate-3" onClick={convert}>Crop</button>}
     <div className="grid mx-4 sm:grid-cols-2 md:grid-cols-4 md:mx-8 gap-x-2 md:gap-x-4 gap-y-4">
       {cropPages.map((page, index) => <img key={index} src={page} className="h-[400px]" alt={`Page ${index + 1}`} />)}
     </div>
-    {cropPages.length > 0 && <button className="font-semibold bg-gradient-to-r from-[#FD8F2F] to-[#FD4D07] text-white py-3 px-6 my-10 rounded-xl 
+    {cropPages.length > 0 && <button className="font-semibold bg-linear-to-r from-[#FD8F2F] to-[#FD4D07] text-white py-3 px-6 my-10 rounded-xl 
             shadow-lg transition-all duration-300 ease-in-out hover:scale-105 hover:rotate-3" onClick={download}>Download</button>}
   </>
 }
