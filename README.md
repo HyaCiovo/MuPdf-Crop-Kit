@@ -30,7 +30,7 @@
 
 ### 浏览器版
 
-- 直接访问网页链接（[MuPdf-Crop-Kit](https://mupdf-convert-kit.vercel.app/)）。
+- 直接访问网页链接（[MuPdf-Crop-Kit](https://mupdf-crop-kit.vercel.app/)）。
 
 ### 桌面版
 
