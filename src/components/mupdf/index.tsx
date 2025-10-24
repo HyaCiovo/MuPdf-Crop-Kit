@@ -10,13 +10,24 @@ const MuPdf = () => {
 
   function renderPage(index: number, doc: mupdfjs.PDFDocument) {
     const page = doc.loadPage(index);
-    const zoom = window.devicePixelRatio;
-    const png = page
-      .toPixmap([zoom, 0, 0, zoom, 0, 0], mupdfjs.ColorSpace.DeviceRGB)
-      .asPNG();
-    return URL.createObjectURL(new Blob([png]));
+    // 限制最大缩放比例，避免创建过大的图片
+    const zoom = Math.min(window.devicePixelRatio, 2.0);
+    try {
+      const png = page
+        .toPixmap([zoom, 0, 0, zoom, 0, 0], mupdfjs.ColorSpace.DeviceRGB)
+        .asPNG();
+      return URL.createObjectURL(new Blob([png as any]));
+    } catch (error) {
+      console.log("首次渲染失败，将尝试更低的分辨率", error)
+      // 如果渲染失败，尝试更低的分辨率
+      const lowZoom = Math.min(zoom, 1.0);
+      const png = page
+        .toPixmap([lowZoom, 0, 0, lowZoom, 0, 0], mupdfjs.ColorSpace.DeviceRGB)
+        .asPNG();
+      return URL.createObjectURL(new Blob([png as any]));
+    }
   }
-  
+
   function merge(
     targetPDF: mupdfjs.PDFDocument,
     sourcePage: mupdfjs.PDFPage
@@ -39,7 +50,7 @@ const MuPdf = () => {
     // Insert the new page at the specified position
     targetPDF.insertPage(-1, newPageObj);
   }
-  
+
   function generateNewDoc(PDF: mupdfjs.PDFDocument) {
     const count = PDF.countPages();
     const mergedPDF = new mupdfjs.PDFDocument();
@@ -48,14 +59,14 @@ const MuPdf = () => {
       merge(mergedPDF, page);
       merge(mergedPDF, page);
     }
-  
+
     for (let i = 0; i < count * 2; i++) {
       const page = mergedPDF.loadPage(i); // 使用 mergedPDF 的页码
       const [x, y, width, height] = page.getBounds();
       if (i % 2 === 0)
         page.setPageBox("CropBox", [x, y, x + width / 2, y + height]);
       else page.setPageBox("CropBox", [x + width / 2, y, x + width, y + height]);
-  
+
       page.setPageBox("TrimBox", [0, 0, 595.28, 841.89]);
     }
     return mergedPDF;
@@ -116,7 +127,7 @@ const MuPdf = () => {
     if (!mergedDocRef.current)
       return toast.error('Please crop the PDF file first!')
     const res = mergedDocRef.current.saveToBuffer().asUint8Array();
-    const blob = new Blob([res], { type: 'application/pdf' });
+    const blob = new Blob([res as any], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
