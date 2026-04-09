@@ -55,19 +55,19 @@ const App = () => {
 
       <div className="z-10 text-center flex flex-col items-center w-full">
         <h1
-          className="title flex flex-col justify-center items-center text-2xl sm:text-3xl md:text-4xl lg:text-6xl select-none hover:scale-105 transform duration-300
-            font-extrabold text-transparent bg-clip-text bg-linear-to-r from-[#FD8F2F] to-[#FD4D07] mb-6"
+          className="title flex flex-col justify-center items-center text-3xl sm:text-4xl md:text-5xl lg:text-7xl select-none hover:scale-105 transform duration-300
+            font-black text-transparent bg-clip-text bg-linear-to-r from-[#FD8F2F] to-[#FD4D07] mb-6 tracking-tight"
         >
           <img alt="logo" src={Logo} className="size-32 md:size-40" />
-          MuPdf-Crop-Kit
+          MuPdf Crop Kit
         </h1>
-        <div className="select-none text-sm sm:text-lg md:text-xl pb-10 max-w-[70vw] hover:scale-105 transform duration-300">
-          Crop PDF files from A3 to A4 size.
+        <div className="select-none text-base sm:text-lg md:text-xl pb-10 max-w-[70vw] hover:scale-105 transform duration-300 font-medium text-gray-600">
+          Effortless PDF processing tool. Supports A3 to A4 conversion with vertical and horizontal splitting modes.
         </div>
-        <Suspense fallback={<div>Loading MuPdf... Please hang on 😘</div>}>
+        <Suspense fallback={<div className="font-medium text-orange-500 animate-pulse">Initializing cropping engine... 😘</div>}>
           <LazyMuPdf />
         </Suspense>
-        <div className="text-sm text-gray-500 text-center mt-16 select-none hover:scale-105 transform duration-300">
+        <div className="text-sm text-gray-400 text-center mt-16 select-none hover:scale-105 transform duration-300">
           <span className="mr-2">Made with ❤️ by</span>
           <a
             href="https://github.com/HyaCiovo"
